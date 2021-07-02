@@ -60,6 +60,7 @@
       :position-x="contextMenuState.x"
       :position-y="contextMenuState.y"
       @print="handlePrint"
+      @print_dry="handlePrintDry"
       @view="handleFileOpenDialog"
       @edit="handleFileOpenDialog"
       @rename="handleRenameDialog"
@@ -563,6 +564,17 @@ export default class FileSystem extends Mixins(StateMixin, FilesMixin, ServicesM
       this.$router.push({ path: '/' })
     }
   }
+
+ handlePrintDry (file: AppFile | AppFileWithMeta) {
+    if (this.disabled) return
+    SocketActions.printerPrintStartDry(`${this.visiblePath}/${file.filename}`)
+
+    // If we aren't on the dashboard, push the user back there.
+    if (this.$router.currentRoute.path !== '/') {
+      this.$router.push({ path: '/' })
+    }
+  }
+
 
   async handleSaveFileChanges (contents: string, restart: string) {
     if (contents.length > 0) {

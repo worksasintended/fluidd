@@ -206,6 +206,17 @@ export const SocketActions = {
     )
   },
 
+  async printerPrintStartDry (path: string) {
+    baseEmit(
+      'printer.print.startDry', {
+        dispatch: 'void',
+        params: {
+          filename: path
+        }
+      }
+    )
+  },
+
   async printerPrintStart (path: string) {
     baseEmit(
       'printer.print.start', {
